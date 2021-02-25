@@ -1,0 +1,15 @@
+{
+  "name": "node_express_backend",
+  "version": "1.0.0",
+  "description": "Node.js Restful CRUD API with Node.js, Express and MongoDB",
+  "main": "server.js",
+  "repository": "https://github.com/paraggoyal28/node_express_backend.git",
+  "author": "paraggoyal28 <2015uec1209@mnit.ac.in>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.18"
+  }
+}
