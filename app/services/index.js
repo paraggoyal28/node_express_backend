@@ -12,10 +12,8 @@ class TutorialService {
         return TutorialModel.create(tutorial);
     }
 
-    async findAll(query) {
-        const { title } = query;
+    async findAll(title) {
         const condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
-
         return TutorialModel.findAll(condition);
     }
 
@@ -23,13 +21,11 @@ class TutorialService {
         return TutorialModel.findById(id);
     }
 
-    async update(req) {
-        const id = req.params.id;
-        return TutorialModel.update(id, req.body);
+    async update(id, body) {
+        return TutorialModel.update(id, body);
     }
 
-    async delete(req) {
-        const id = req.params.id;
+    async delete(id) {
         return TutorialModel.delete(id);
     }
 
