@@ -1,8 +1,10 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const db = require("./app/models");
+import express from "express";
+import pakg from "body-parser";
+import cors from "cors";
+import db from "./app/database/index.js";
+import route from './app/routes/tutorial.route.js';
 
+const { json, urlencoded } = pakg;
 const app = express();
 
 const corsOptions = {
@@ -12,10 +14,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
-app.use(bodyParser.json());
+app.use(json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(urlencoded({ extended: true }));
 
 db.mongoose.connect(db.url, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
     console.log("Connected to the database!");
@@ -29,6 +31,7 @@ app.get("/", (req, res) => {
     res.json({ message: "Welcome to bezkoder application." });
 });
 
+route(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

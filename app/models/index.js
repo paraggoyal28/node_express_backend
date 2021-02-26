@@ -1,33 +1,35 @@
-const db = require("../database");
-
+import db from "../database/index.js";
+const { tutorials } = db;
+console.log(tutorials);
 class TutorialModel {
     async create(tutorial) {
-        return db.tutorials.save(tutorial);
+        const newTutorial = new tutorials(tutorial);
+        return newTutorial.save(newTutorial);
     }
 
     async findAll(condition) {
-        return db.tutorials.find(condition);
+        return tutorials.find(condition);
     }
 
     async findById(id) {
-        return db.tutorials.findById(id);
+        return tutorials.findById(id);
     }
 
     async update(id, body) {
-        return db.tutorials.findByIdAndUpdate(id, body, { useFindAndModify: false });
+        return tutorials.findByIdAndUpdate(id, body, { useFindAndModify: false });
     }
 
     async delete(id) {
-        return db.tutorials.findByIdAndRemove(id);
+        return tutorials.findByIdAndRemove(id);
     }
 
     async deleteAll() {
-        return db.tutorials.deleteMany({});
+        return tutorials.deleteMany({});
     }
 
     async findAllPublished() {
-        return db.tutorials.find({ published: true });
+        return tutorials.find({ published: true });
     }
 }
 
-module.exports = TutorialModel;
+export default TutorialModel;

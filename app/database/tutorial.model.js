@@ -1,4 +1,4 @@
-module.exports = mongoose => {
+const TutorialModel = (mongoose) => {
     var schema = mongoose.Schema(
         {
             title: String,
@@ -9,7 +9,7 @@ module.exports = mongoose => {
             timestamps: true
         }
     );
-    schema.method("toJSON", () => {
+    schema.method("toJSON", function () {
         const { __v, _id, ...object } = this.toObject();
         object.id = _id;
         return object;
@@ -18,3 +18,4 @@ module.exports = mongoose => {
     const Tutorial = mongoose.model("tutorial", schema);
     return Tutorial;
 }
+export default TutorialModel;

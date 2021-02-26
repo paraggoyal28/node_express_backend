@@ -1,4 +1,5 @@
-const TutorialService = require('../services');
+import TutorialService from '../services/index.js';
+const tutorialService = new TutorialService();
 
 class TutorialController {
     async create(req, res) {
@@ -8,7 +9,7 @@ class TutorialController {
             return;
         }
 
-        return TutorialService.create(req.body).then(data => {
+        return tutorialService.create(req.body).then(data => {
             res.send(data);
         }).catch(err => {
             res.status(500).send({
@@ -19,7 +20,7 @@ class TutorialController {
 
     async findAll(req, res) {
         const { title } = req.query;
-        return TutorialService.findAll(title).then(data => {
+        return tutorialService.findAll(title).then(data => {
             res.send(data);
         }).catch(err => {
             res.status(500).send({ message: err.message || "Some error occured while retrieving tutorials." });
@@ -28,7 +29,7 @@ class TutorialController {
 
     async findById(req, res) {
         const id = req.params.id;
-        return TutorialService.findById(id).then(data => {
+        return tutorialService.findById(id).then(data => {
             if (!data) {
                 res.status(404).send({ message: "Not found Tutorial with id= " + id });
             } else {
@@ -47,7 +48,7 @@ class TutorialController {
         }
         const id = req.params.id;
         const body = req.body;
-        return TutorialService.update(id, body).then(data => {
+        return tutorialService.update(id, body).then(data => {
             if (!data) {
                 res.status(404).send({
                     message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found!`
@@ -62,9 +63,9 @@ class TutorialController {
         });
     }
 
-    async delete(req, res) {
+    async deleteById(req, res) {
         const id = req.params.id;
-        return TutorialService.delete(id).then(data => {
+        return tutorialService.delete(id).then(data => {
             if (!data) {
                 res.status(404).send({
                     message: `Cannot delete Tutorial with id = ${id}.Maybe Tutorial doesnot exists`,
@@ -82,7 +83,7 @@ class TutorialController {
     }
 
     async deleteAll(req, res) {
-        return TutorialService.deleteAll().then(data => {
+        return tutorialService.deleteAll().then(data => {
             res.send({
                 message: `${data.deletedCount} Tutorials were deleted successfully!`
             });
@@ -94,7 +95,7 @@ class TutorialController {
     };
 
     async findAllPublished(req, res) {
-        return TutorialService.findAllPublished().then(data => {
+        return tutorialService.findAllPublished().then(data => {
             res.send(data);
         }).catch(err => {
             res.status(500).send({
@@ -105,4 +106,4 @@ class TutorialController {
 
 }
 
-module.exports = TutorialController;
+export default TutorialController;

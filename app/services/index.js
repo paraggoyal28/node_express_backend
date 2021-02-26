@@ -1,41 +1,44 @@
-const tutorialModel = require('../database/tutorial.model');
-const TutorialModel = require('../models');
-
+import TutorialModel from '../models/index.js';
+const tutorialModel = new TutorialModel();
 class TutorialService {
     async create(tutorial) {
-        const tutorial = new tutorialModel({
+        const newTutorial = {
             title: tutorial.title,
             description: tutorial.description,
             published: tutorial.published || false,
-        });
+        };
 
-        return TutorialModel.create(tutorial);
+        return tutorialModel.create(newTutorial);
     }
 
     async findAll(title) {
-        const condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
-        return TutorialModel.findAll(condition);
+        let newTitle = ""
+        for (const letter of title) {
+            newTitle += letter == '"' ? '' : letter;
+        }
+        const condition = newTitle ? { title: { $regex: new RegExp(newTitle), $options: "i" } } : {};
+        return tutorialModel.findAll(condition);
     }
 
     async findById(id) {
-        return TutorialModel.findById(id);
+        return tutorialModel.findById(id);
     }
 
     async update(id, body) {
-        return TutorialModel.update(id, body);
+        return tutorialModel.update(id, body);
     }
 
     async delete(id) {
-        return TutorialModel.delete(id);
+        return tutorialModel.delete(id);
     }
 
     async deleteAll() {
-        return TutorialModel.deleteAll();
+        return tutorialModel.deleteAll();
     }
 
     async findAllPublished() {
-        return TutorialModel.findAllPublished();
+        return tutorialModel.findAllPublished();
     }
 }
 
-module.exports = TutorialService;
+export default TutorialService;
